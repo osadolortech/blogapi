@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from routes.blog_routes import blog_route
 
 app = FastAPI()
 
@@ -12,6 +13,4 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-@app.get("/")
-async def get_home():
-    return {"welcome home"}
+app.include_router(blog_route)
