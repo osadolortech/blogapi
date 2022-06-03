@@ -1,7 +1,11 @@
 from http import client
+from os import getenv
 from pymongo import MongoClient
 
-client = MongoClient("mongodb+srv://FinalBlog :Computer333@cluster0.ve2nnja.mongodb.net/mainblog?retryWrites=true&w=majority")
+username = getenv("DB_USERNAME")
+password = getenv("DB_BASE")
+
+client = MongoClient("mongodb+srv://username:password@cluster0.ve2nnja.mongodb.net/mainblog?retryWrites=true&w=majority")
 
 db = client.blog_application
 
