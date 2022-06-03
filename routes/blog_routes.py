@@ -1,10 +1,8 @@
 import fastapi
-
-
 from fastapi import APIRouter
-from config.database import collection_post
-from models.blog_models import Blog
-from schemas.blog_shema import blog_schemas,blogs_schemas
+from config.database import collection_post,collection_comment
+from models.blog_models import Blog,Comment
+from schemas.blog_shema import blog_schemas,blogs_schemas,comment_schema,comments_schema
 from bson import ObjectId
 
 blog_route = APIRouter()
@@ -37,3 +35,15 @@ async def update_post(id: str, blog: Blog):
 async def delete_post(id: str):
     collection_post.find_one_and_delete({"_id": ObjectId(id)})
     return{"status":"ok", "deleted":"post has been deleted"}
+
+
+@blog_route.get("/comment/all_coment")
+async def get_comment():
+    comment = comments_schema(collection_comment.find())
+    return {"status":"ok", "get_all_comments": comment}
+
+@blog_route.post("/comment")
+async def post_comment(comment: Comment):
+    _id = collection_comment.insert_one(dict(comment))
+    comment = comments_schema(collection_comment.find({"_id": _id.inserted_id}))
+    return {"status":"ok", "post_comment": comment}

@@ -10,3 +10,12 @@ def blog_schemas(blog) -> dict:
 # this gets all the blog post
 def blogs_schemas(blogs) -> list:
     return [blog_schemas(blog) for blog in blogs ]
+
+
+def comment_schema(comment) -> dict:
+    return{
+        "id": str(comment["_id"]),
+        "content": comment["content"]
+    }
+def comments_schema(comments) -> list:
+    return[comment_schema(comment) for comment in comments]

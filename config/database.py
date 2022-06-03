@@ -9,3 +9,4 @@ client = MongoClient(URL)
 db = client.blog_application
 
 collection_post = db["blog_api"]
+collection_comment = db["comment_api"]
