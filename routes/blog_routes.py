@@ -19,9 +19,8 @@ async def blog_post(blog: Blog):
     return {"status": "ok", "post_blog": blog}
 
 @blog_route.get("/{id}")
-async def get_single_post(id: str, comment: Comment):
-    comment = comments_schema(collection_comment.find())
-    blog = blogs_schemas(collection_post.find({"_id": comment.ObjectId(id)}))
+async def get_single_post(id: str):
+    blog = blogs_schemas(collection_post.find({"_id": ObjectId(id)}))
     return {"status":"ok", "get_single_post": blog}
 
 @blog_route.put("/{id}")
@@ -57,5 +56,5 @@ async def single_comment(id: ObjectIdStr):
 @blog_route.get("/comment/all_coment/{post}")
 async def all_comment(post: ObjectIdStr):
     comment = comments_schema(collection_comment.find({"post": post}))
-    return {"status":"ok", "get_all_comments": comment}
+    return {"status":"ok", "comments": comment}
 
